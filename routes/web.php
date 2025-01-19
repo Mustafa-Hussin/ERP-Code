@@ -13,6 +13,10 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\MarketingController;
+use App\Http\Controllers\AfterSalesController;
+use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\TaxController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +51,8 @@ Route::middleware('auth')->group(function () {
     // CRM Routes
     Route::resource('customers', CustomerController::class);
     Route::resource('leads', LeadController::class);
+    Route::resource('marketings', MarketingController::class);
+    Route::resource('after-sales', AfterSalesController::class);
 
     // Sales Routes
     Route::resource('orders', OrderController::class);
@@ -58,30 +64,17 @@ Route::middleware('auth')->group(function () {
 
     // HRM Routes
     Route::resource('employees', EmployeeController::class);
-    Route::resource('attendance', AttendanceController::class);
+    Route::resource('trainings', TrainingController::class);
+    Route::resource('attendances', AttendanceController::class);
 
     // Accounting Routes
     Route::resource('accounts', AccountController::class);
     Route::resource('transactions', TransactionController::class);
+    Route::resource('taxes', TaxController::class);
 
     // Reports Routes
     Route::get('/reports/sales', [ReportController::class, 'salesReport'])->name('sales.report');
     Route::get('/reports/inventory', [ReportController::class, 'inventoryReport'])->name('inventory.report');
 });
-Route::middleware('auth')->group(function () {
-    // CRM
-    Route::resource('marketings', MarketingController::class);
-    Route::resource('after-sales', AfterSalesController::class);
 
-    // HRM
-    Route::resource('trainings', TrainingController::class);
-    Route::resource('attendances', AttendanceController::class);
-
-    // Accounting
-    Route::resource('taxes', TaxController::class);
-
-    // Reports
-    Route::get('/reports/sales', [ReportController::class, 'salesReport'])->name('sales.report');
-    Route::get('/reports/inventory', [ReportController::class, 'inventoryReport'])->name('inventory.report');
-});
 require __DIR__.'/auth.php';
